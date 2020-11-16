@@ -27,5 +27,13 @@
 }
 
 ion-toolbar {
-  --background: var(--ion-color-primary);
+  --background: var(--ion-color-primary);  
+}
+
+ion-title {
+  --color: var(--ion-color-primary-contrast);
+}
+
+ion-card {
+  width: 100%;
 }
