@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemReorderEventDetail } from '@ionic/core';
+import { ForecastManagerService } from '../managers/forecast-manager.service';
 
 export interface IWeatherLocation {
   location: string;
@@ -14,7 +15,7 @@ export interface IWeatherLocation {
 export class HomePage implements OnInit {
   public weatherData: IWeatherLocation[] = [];
 
-  constructor() { }
+  constructor(private forecastManager: ForecastManagerService) { }
 
   ngOnInit(): void {
     this.weatherData.push({
@@ -23,12 +24,13 @@ export class HomePage implements OnInit {
     });
   }
 
-  public addWeatherCard(): void {
+  public async addWeatherCard(): Promise<void> {
+    const weatherForecast = await this.forecastManager.getForecast('-73.9732319', '40.7720232') as any;
+
     this.weatherData.push({
       location: 'Los Angeles, California',
       locationTime: 'Mittwoch, 4. November 2020 20:09'
     });
-
   }
 
   public removeWeatherCard(): void {
