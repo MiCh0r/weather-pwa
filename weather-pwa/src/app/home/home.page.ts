@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.weatherData.push({
       location: 'Wels, Austria',
-      locationTime: new Date().toISOString()
+      locationTime: new Date().toLocaleString()
     });
   }
 
