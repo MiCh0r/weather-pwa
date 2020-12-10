@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from '../services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastManagerService {
 
+  private readonly baseUri = 'https://api.openweathermap.org/data/2.5/onecall';
+
   constructor(
-    private httpClient: HttpClient
+    private httpService: HttpService
   ) { }
 
   public getForecast(lng: string, lat: string): Promise<object> {
-    const apiKey = '<>';
-    const baseUrl = 'https://api.openweathermap.org/data/2.5/onecall';
-    const url = `${baseUrl}?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`;
-    return this.httpClient.get<object>(url).toPromise();
+    const apiKey = '';
+    const url = `${this.baseUri}?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`;
+    return this.httpService.get<object>(url);
   }
 }
