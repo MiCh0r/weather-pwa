@@ -12,6 +12,12 @@ export interface ICurrentWeatherData {
   sunset: string;
 }
 
+export interface IDailyWeatherData {
+  date: string;
+  dailyIcon: string;
+  tempHigh: number;
+  tempLow: number;
+}
 
 export interface IWeatherLocation {
   location: string;
@@ -19,7 +25,7 @@ export interface IWeatherLocation {
   description: string;
   dailyIcon: string;
   currentData: ICurrentWeatherData;
-
+  dailyData: IDailyWeatherData[];
 }
 
 @Component({
@@ -42,6 +48,20 @@ export class HomePage implements OnInit {
       .fromSeconds(weatherForecast.current.dt)
       .setZone(weatherForecast.timezone).toFormat('DDDD t');
 
+    const dailyForecast: IDailyWeatherData[] = [];
+    weatherForecast.daily.forEach(element => {
+      dailyForecast.push({
+        date: DateTime
+          .fromSeconds(element.dt)
+          .setZone(weatherForecast.timezone)
+          .toFormat('ccc'),
+        dailyIcon: this.getIcon(element.weather[0].icon),
+        tempHigh: this.round(element.temp.max),
+        tempLow: this.round(element.temp.min)
+      })
+    });
+    dailyForecast.shift();
+
     this.weatherData.push({
       location: 'New York, USA',
       locationTime: forecastFrom,
@@ -58,7 +78,8 @@ export class HomePage implements OnInit {
         temperature: this.round(weatherForecast.current.temp),
         windDirection: this.round(weatherForecast.current.wind_deg),
         windSpeed: this.round(weatherForecast.current.wind_speed)
-      }
+      },
+      dailyData: dailyForecast
     });
   }
 
