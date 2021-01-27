@@ -13,6 +13,7 @@ steps:
 
 - script: sudo npm install
   displayName: 'Npm install'
+  workingDirectory: '$(Build.SourcesDirectory)/weather-pwa'
 
 - script: cd ./weather-pwa
   displayName: 'cd'
