@@ -16,10 +16,11 @@ steps:
 
 - script: sudo ionic --prod --engine=browser
   displayName: 'Ionic build'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/weather-pwa'
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/www'
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/weather-pwa/www'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
