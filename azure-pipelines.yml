@@ -15,17 +15,7 @@ steps:
   displayName: 'Npm install'
   workingDirectory: '$(Build.SourcesDirectory)/weather-pwa'
 
-- script: cd ./weather-pwa
-  displayName: 'cd'
-  
-- script: ls
-  displayName: 'ls'
-
-- script: ls
-  workingDirectory: '$(Build.SourcesDirectory)/weather-pwa'
-  displayName: 'Ionic build'
-
-- script: sudo ionic --prod --engine=browser
+- script: sudo ionic build --prod --engine=browser
   displayName: 'Ionic build'
   workingDirectory: '$(Build.SourcesDirectory)/weather-pwa'
 
