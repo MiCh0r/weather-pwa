@@ -14,9 +14,13 @@ steps:
 - script: sudo npm install
   displayName: 'Npm install'
 
+- script: ls
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: 'Ionic build'
+
 - script: sudo ionic --prod --engine=browser
   displayName: 'Ionic build'
-  workingDirectory: '$(System.DefaultWorkingDirectory)/weather-pwa'
+  workingDirectory: '$(Build.SourcesDirectory)/weather-pwa'
 
 - task: ArchiveFiles@2
   inputs:
