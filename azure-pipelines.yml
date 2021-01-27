@@ -20,7 +20,7 @@ steps:
 
 - script: sudo ionic --prod --engine=browser
   displayName: 'Ionic build'
-  workingDirectory: '$(Build.SourcesDirectory)/weather-pwa'
+  workingDirectory: $(Build.SourcesDirectory)/weather-pwa
 
 - task: ArchiveFiles@2
   inputs:
