@@ -6,6 +6,7 @@ import {
 } from '.';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
 
@@ -22,6 +23,7 @@ const COMPONENTS = [
         IonicModule,
         MatSelectModule,
         MatDialogModule,
+        MatButtonModule,
         FormsModule
     ],
     providers: [
