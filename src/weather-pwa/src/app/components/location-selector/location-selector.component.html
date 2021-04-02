@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Select your location</h1>
+<div mat-dialog-content>
+  <p>Select your location</p>
+  <mat-form-field>
+    <mat-label>Select Location</mat-label>
+    <mat-select [(ngModel)]="selectedValue">
+      <mat-option *ngFor="let location of data" [value]="location">
+        {{location.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>Ok</button>
+</div>

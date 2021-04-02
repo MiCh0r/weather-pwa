@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ILatLng } from '../home/home.page';
 import { WeatherForecast } from '../models';
 import { HttpService } from '../services';
 
@@ -13,9 +14,9 @@ export class ForecastManagerService {
     private httpService: HttpService
   ) { }
 
-  public getForecast(lng: string, lat: string): Promise<WeatherForecast> {
+  public getForecast(position: ILatLng): Promise<WeatherForecast> {
     const apiKey = '8b76ad5d7d92840d2fba7809bef36755';
-    const url = `${this.baseUri}?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`;
+    const url = `${this.baseUri}?lat=${position.lat}&lon=${position.lng}&appid=${apiKey}&units=metric`;
     return this.httpService.get<WeatherForecast>(url);
   }
 }
