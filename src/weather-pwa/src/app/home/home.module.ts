@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-
 import { HomePageRoutingModule } from './home-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
-import { LocationSelectorComponent } from '../components/location-selector/location-selector.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ComponentsModule } from '../components/components.module';
 
 
 @NgModule({
@@ -16,9 +15,10 @@ import { LocationSelectorComponent } from '../components/location-selector/locat
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
+    ComponentsModule,
     MatDialogModule,
-    MatInputModule
+    MatSelectModule
   ],
-  declarations: [HomePage, LocationSelectorComponent]
+  declarations: [HomePage]
 })
 export class HomePageModule { }

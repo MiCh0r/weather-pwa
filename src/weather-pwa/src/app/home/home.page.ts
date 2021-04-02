@@ -30,6 +30,15 @@ export interface IWeatherLocation {
   dailyData: IDailyWeatherData[];
 }
 
+export interface ILatLng { lat: number, lng: number };
+
+
+export interface ISelectableWeatherLocation {
+  value: ILatLng;
+  viewValue: string;
+}
+
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -37,7 +46,10 @@ export interface IWeatherLocation {
 })
 export class HomePage implements OnInit {
   public weatherData: IWeatherLocation[] = [];
-  private animal: string;
+  private selectableLocations: ISelectableWeatherLocation[] = [
+    { value: { lat: 48.16542, lng: 14.03664 }, viewValue: 'Wels, Austria' },
+    { value: { lat: 40.7720232, lng: -73.9732319 }, viewValue: 'New York, USA' }
+  ];
 
   constructor(
     private dialog: MatDialog,
@@ -46,8 +58,8 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
   }
 
-  public async addWeatherCard(): Promise<void> {
-    const weatherForecast = await this.forecastManager.getForecast('-73.9732319', '40.7720232');
+  public async addWeatherCard(addableLocation: ISelectableWeatherLocation): Promise<void> {
+    const weatherForecast = await this.forecastManager.getForecast(addableLocation.value);
 
     const forecastFrom = DateTime
       .fromSeconds(weatherForecast.current.dt)
@@ -68,7 +80,7 @@ export class HomePage implements OnInit {
     dailyForecast.shift();
 
     this.weatherData.push({
-      location: 'New York, USA',
+      location: addableLocation.viewValue,
       locationTime: forecastFrom,
       description: weatherForecast.current.weather[0].description,
       dailyIcon: this.getIcon(weatherForecast.current.weather[0].icon),
@@ -91,12 +103,14 @@ export class HomePage implements OnInit {
   public openDialog(): void {
     const dialogRef = this.dialog.open(LocationSelectorComponent, {
       width: '250px',
-      data: { name: 'Simon', animal: 'Bee' }
+      data: this.selectableLocations
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        const location: ISelectableWeatherLocation = result;
+        await this.addWeatherCard(location);
+      }
     });
   }
 
