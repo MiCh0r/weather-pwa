@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ForecastManagerService } from './managers';
 import { HttpService } from './services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const SERVICES = [
   HttpService,

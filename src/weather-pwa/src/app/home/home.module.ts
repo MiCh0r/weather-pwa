@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { LocationSelectorComponent } from '../components/location-selector/location-selector.component';
 
 
 @NgModule({
@@ -12,8 +15,10 @@ import { HomePageRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    MatDialogModule,
+    MatInputModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, LocationSelectorComponent]
 })
-export class HomePageModule {}
+export class HomePageModule { }

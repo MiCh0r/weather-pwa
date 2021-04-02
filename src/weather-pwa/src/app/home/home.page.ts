@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ForecastManagerService } from '../managers';
 import { DateTime } from 'luxon';
+import { MatDialog } from '@angular/material/dialog';
+import { LocationSelectorComponent } from '../components/location-selector/location-selector.component';
 
 export interface ICurrentWeatherData {
   temperature: number;
@@ -35,8 +37,11 @@ export interface IWeatherLocation {
 })
 export class HomePage implements OnInit {
   public weatherData: IWeatherLocation[] = [];
+  private animal: string;
 
-  constructor(private forecastManager: ForecastManagerService) { }
+  constructor(
+    private dialog: MatDialog,
+    private forecastManager: ForecastManagerService) { }
 
   ngOnInit(): void {
   }
@@ -80,6 +85,18 @@ export class HomePage implements OnInit {
         windSpeed: this.round(weatherForecast.current.wind_speed)
       },
       dailyData: dailyForecast
+    });
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(LocationSelectorComponent, {
+      width: '250px',
+      data: { name: 'Simon', animal: 'Bee' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
     });
   }
 
