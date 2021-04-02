@@ -16,77 +16,42 @@
         </ion-card-header>
 
         <ion-card-content>
-          <div class="description">overcast clouds</div>
+          <div class="description">{{ weatherLocation.description}}</div>
           <div class="current">
             <div class="visual">
-              <div class="icon"><img class="img-responsive" src="assets\icon\02n@2x.png"></div>
+              <div class="icon"><img class="img-responsive" src="{{ weatherLocation.dailyIcon }}"></div>
               <div class="temperature">
-                <span class="value">10</span><span class="scale">°C</span>
+                <span class="value">{{ weatherLocation.currentData.temperature }}</span><span class="scale">°C</span>
               </div>
             </div>
             <div class="description">
               <div class="humidity">
-                <span class="label">Humidity:</span>
-                <span class="value"> 70</span><span class="scale">%</span>
+                <span class="label">Humidity: </span>
+                <span class="value">{{ weatherLocation.currentData.humidity }}</span><span class="scale">%</span>
               </div>
               <div class="wind">
-                <span class="label">Wind:</span>
-                <span class="value"> 7 </span>
-                <span class="scale">km/h</span>
-                <span class="direction"> 300</span>°
+                <span class="label">Wind: </span>
+                <span class="value">{{ weatherLocation.currentData.windSpeed }}</span>
+                <span class="scale">km/h </span>
+                <span class="direction">{{ weatherLocation.currentData.windDirection }}</span>°
               </div>
               <div class="sunrise">
-                <span class="label">Sunrise:</span>
-                <span class="value"> 07:05</span>
+                <span class="label">Sunrise: </span>
+                <span class="value">{{ weatherLocation.currentData.sunrise }}</span>
               </div>
               <div class="sunset">
-                <span class="label">Sunset:</span>
-                <span class="value"> 16:28</span>
+                <span class="label">Sunset: </span>
+                <span class="value">{{ weatherLocation.currentData.sunset }}</span>
               </div>
             </div>
           </div>
           <div class="future">
-            <div class="oneday">
-              <div class="date">Thu</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">10<span class="value"></span>°</div>
-              <div class="temp-low">1<span class="value"></span>°</div>
-            </div>
-            <div class="oneday">
-              <div class="date">Fri</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">13<span class="value"></span>°</div>
-              <div class="temp-low">2<span class="value"></span>°</div>
-            </div>
-            <div class="oneday">
-              <div class="date">Sat</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">5<span class="value"></span>°</div>
-              <div class="temp-low">1<span class="value"></span>°</div>
-            </div>
-            <div class="oneday">
-              <div class="date">Sun</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">4<span class="value"></span>°</div>
-              <div class="temp-low">1<span class="value"></span>°</div>
-            </div>
-            <div class="oneday">
-              <div class="date">Mon</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">5<span class="value"></span>°</div>
-              <div class="temp-low">-2<span class="value"></span>°</div>
-            </div>
-            <div class="oneday">
-              <div class="date">Tue</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">2<span class="value"></span>°</div>
-              <div class="temp-low">-3<span class="value"></span>°</div>
-            </div>
-            <div class="oneday">
-              <div class="date">Wed</div>
-              <div class="icon"><img class="img-responsive" src="assets\icon\01n@2x.png"></div>
-              <div class="temp-high">4<span class="value"></span>°</div>
-              <div class="temp-low">1<span class="value"></span>°</div>
+            <div class="oneday" *ngFor="let dailyData of weatherLocation.dailyData">
+              <div class="date">{{ dailyData.date }}</div>
+              <div class="icon"><img class="img-responsive" src="{{ dailyData.dailyIcon }}">
+              </div>
+              <div class="temp-high">{{ dailyData.tempHigh }}<span class="value"></span>°</div>
+              <div class="temp-low">{{ dailyData.tempLow }}<span class="value"></span>°</div>
             </div>
           </div>
           <ion-reorder slot="end"></ion-reorder>
