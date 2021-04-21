@@ -139,4 +139,14 @@ export class HomePage implements OnInit {
     // After complete is called the items will be in the new order
     console.log('After complete', this.weatherData);
   }
+
+  public removeWeatherItem(weatherItem) {
+
+    for (let i = 0; i < this.weatherData.length; i++) {
+
+      if (this.weatherData[i] == weatherItem) {
+        this.weatherData.splice(i, 1);
+      }
+    }
+  }
 }
