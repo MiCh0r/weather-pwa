@@ -61,6 +61,12 @@ export class HomePage implements OnInit {
   public async addWeatherCard(addableLocation: ISelectableWeatherLocation): Promise<void> {
     const weatherForecast = await this.forecastManager.getForecast(addableLocation.value);
 
+    if (!weatherForecast) {
+      // TODO: Show Material Design Dialog
+      return;
+    }
+    // TODO: Offline and data are requested from local storage 
+
     const forecastFrom = DateTime
       .fromSeconds(weatherForecast.current.dt)
       .setZone(weatherForecast.timezone).toFormat('DDDD t');
