@@ -1,70 +1,78 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Weather App
+      <ion-icon name="sunny"></ion-icon> Weather App
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-reorder-group (ionItemReorder)="doReorder($event)" disabled="false">
-    <ion-item *ngFor="let weatherLocation of weatherData">
-      <ion-card class="weather-card">
-        <ion-card-header>
-          <ion-card-title class="location">{{ weatherLocation.location }}</ion-card-title>
-          <ion-card-subtitle class="date">{{ weatherLocation.locationTime }}</ion-card-subtitle>
-        </ion-card-header>
+    <ion-item-sliding *ngFor="let weatherLocation of weatherData">
+      <ion-item>
+        <ion-card class="weather-card">
+          <ion-card-header>
+            <ion-card-title class="location">{{ weatherLocation.location }}</ion-card-title>
+            <ion-card-subtitle class="date">{{ weatherLocation.locationTime }}</ion-card-subtitle>
+          </ion-card-header>
 
-        <ion-card-content>
-          <div class="description">{{ weatherLocation.description}}</div>
-          <div class="current">
-            <div class="visual">
-              <div class="icon"><img class="img-responsive" src="{{ weatherLocation.dailyIcon }}"></div>
-              <div class="temperature">
-                <span class="value">{{ weatherLocation.currentData.temperature }}</span><span class="scale">°C</span>
+          <ion-card-content>
+            <div class="description">{{ weatherLocation.description}}</div>
+            <div class="current">
+              <div class="visual">
+                <div class="icon"><img class="img-responsive" src="{{ weatherLocation.dailyIcon }}"></div>
+                <div class="temperature">
+                  <span class="value">{{ weatherLocation.currentData.temperature }}</span><span class="scale">°C</span>
+                </div>
+              </div>
+              <div class="description">
+                <div class="humidity">
+                  <span class="label">Humidity: </span>
+                  <span class="value">{{ weatherLocation.currentData.humidity }}</span><span class="scale">%</span>
+                </div>
+                <div class="wind">
+                  <span class="label">Wind: </span>
+                  <span class="value">{{ weatherLocation.currentData.windSpeed }}</span>
+                  <span class="scale">km/h </span>
+                  <span class="direction">{{ weatherLocation.currentData.windDirection }}</span>°
+                </div>
+                <div class="sunrise">
+                  <span class="label">Sunrise: </span>
+                  <span class="value">{{ weatherLocation.currentData.sunrise }}</span>
+                </div>
+                <div class="sunset">
+                  <span class="label">Sunset: </span>
+                  <span class="value">{{ weatherLocation.currentData.sunset }}</span>
+                </div>
               </div>
             </div>
-            <div class="description">
-              <div class="humidity">
-                <span class="label">Humidity: </span>
-                <span class="value">{{ weatherLocation.currentData.humidity }}</span><span class="scale">%</span>
-              </div>
-              <div class="wind">
-                <span class="label">Wind: </span>
-                <span class="value">{{ weatherLocation.currentData.windSpeed }}</span>
-                <span class="scale">km/h </span>
-                <span class="direction">{{ weatherLocation.currentData.windDirection }}</span>°
-              </div>
-              <div class="sunrise">
-                <span class="label">Sunrise: </span>
-                <span class="value">{{ weatherLocation.currentData.sunrise }}</span>
-              </div>
-              <div class="sunset">
-                <span class="label">Sunset: </span>
-                <span class="value">{{ weatherLocation.currentData.sunset }}</span>
+            <div class="future">
+              <div class="oneday" *ngFor="let dailyData of weatherLocation.dailyData">
+                <div class="date">{{ dailyData.date }}</div>
+                <div class="icon"><img class="img-responsive" src="{{ dailyData.dailyIcon }}">
+                </div>
+                <div class="temp-high">{{ dailyData.tempHigh }}<span class="value"></span>°</div>
+                <div class="temp-low">{{ dailyData.tempLow }}<span class="value"></span>°</div>
               </div>
             </div>
-          </div>
-          <div class="future">
-            <div class="oneday" *ngFor="let dailyData of weatherLocation.dailyData">
-              <div class="date">{{ dailyData.date }}</div>
-              <div class="icon"><img class="img-responsive" src="{{ dailyData.dailyIcon }}">
-              </div>
-              <div class="temp-high">{{ dailyData.tempHigh }}<span class="value"></span>°</div>
-              <div class="temp-low">{{ dailyData.tempLow }}<span class="value"></span>°</div>
-            </div>
-          </div>
-          <ion-reorder slot="end"></ion-reorder>
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-button color="danger" expand="full" size="large" (click)="removeWeatherItem(weatherLocation)">
+          <ion-icon name="trash"></ion-icon> Delete
+        </ion-button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-reorder-group>
 </ion-content>
 
 <ion-footer>
   <ion-fab vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openDialog()">
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="location"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-footer>
