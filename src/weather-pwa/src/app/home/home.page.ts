@@ -4,6 +4,7 @@ import { ForecastManagerService } from '../managers';
 import { DateTime } from 'luxon';
 import { MatDialog } from '@angular/material/dialog';
 import { LocationSelectorComponent } from '../components/location-selector/location-selector.component';
+import { ToastController } from '@ionic/angular';
 
 export interface ICurrentWeatherData {
   temperature: number;
@@ -63,6 +64,7 @@ export class HomePage implements OnInit {
 
     if (!weatherForecast) {
       // TODO: Show Material Design Dialog
+      this.showOfflineToast();
       return;
     }
     // TODO: Offline and data are requested from local storage 
@@ -118,6 +120,15 @@ export class HomePage implements OnInit {
         await this.addWeatherCard(location);
       }
     });
+  }
+
+  async showOfflineToast() {
+    const toast = await (new ToastController).create({ //TODO better with Constructor?
+      message: 'Sorry, you\'re offline',
+      duration: 2500,
+      color: "danger"
+    });
+    toast.present();
   }
 
   private round(value: number): number {
