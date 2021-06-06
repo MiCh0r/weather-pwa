@@ -29,6 +29,7 @@ export interface IWeatherLocation {
   dailyIcon: string;
   currentData: ICurrentWeatherData;
   dailyData: IDailyWeatherData[];
+  isFromCache: boolean;
 }
 
 export interface ILatLng { lat: number, lng: number };
@@ -104,7 +105,8 @@ export class HomePage implements OnInit {
         windDirection: this.round(weatherForecast.current.wind_deg),
         windSpeed: this.round(weatherForecast.current.wind_speed)
       },
-      dailyData: dailyForecast
+      dailyData: dailyForecast,
+      isFromCache: weatherForecast.isFromCache
     });
   }
 

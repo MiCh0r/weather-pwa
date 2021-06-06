@@ -25,11 +25,14 @@ export class ForecastManagerService {
       const url = `${this.baseUri}?lat=${position.lat}&lon=${position.lng}&appid=${apiKey}&units=metric`;
       const weatherForecast = await this.httpService.get<WeatherForecast>(url);
       localStorage.setItem(`lat=${position.lat}&lon=${position.lng}`, JSON.stringify(weatherForecast));
+      weatherForecast.isFromCache = false;
       return weatherForecast;
     } else if (!storageItem && !navigator.onLine) {
       console.log("ERROR you are offline");
     } else {
-      return JSON.parse(storageItem);
+      const weatherForecast = JSON.parse(storageItem);
+      weatherForecast.isFromCache = true;
+      return weatherForecast;
     }
   }
 }
