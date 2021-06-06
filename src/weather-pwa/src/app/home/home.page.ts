@@ -4,6 +4,7 @@ import { ForecastManagerService } from '../managers';
 import { DateTime } from 'luxon';
 import { MatDialog } from '@angular/material/dialog';
 import { LocationSelectorComponent } from '../components/location-selector/location-selector.component';
+import { ToastController } from '@ionic/angular';
 
 export interface ICurrentWeatherData {
   temperature: number;
@@ -28,6 +29,7 @@ export interface IWeatherLocation {
   dailyIcon: string;
   currentData: ICurrentWeatherData;
   dailyData: IDailyWeatherData[];
+  isFromCache: boolean;
 }
 
 export interface ILatLng { lat: number, lng: number };
@@ -60,6 +62,13 @@ export class HomePage implements OnInit {
 
   public async addWeatherCard(addableLocation: ISelectableWeatherLocation): Promise<void> {
     const weatherForecast = await this.forecastManager.getForecast(addableLocation.value);
+
+    if (!weatherForecast) {
+      // TODO: Show Material Design Dialog
+      this.showOfflineToast();
+      return;
+    }
+    // TODO: Offline and data are requested from local storage 
 
     const forecastFrom = DateTime
       .fromSeconds(weatherForecast.current.dt)
@@ -96,7 +105,8 @@ export class HomePage implements OnInit {
         windDirection: this.round(weatherForecast.current.wind_deg),
         windSpeed: this.round(weatherForecast.current.wind_speed)
       },
-      dailyData: dailyForecast
+      dailyData: dailyForecast,
+      isFromCache: weatherForecast.isFromCache
     });
   }
 
@@ -112,6 +122,15 @@ export class HomePage implements OnInit {
         await this.addWeatherCard(location);
       }
     });
+  }
+
+  async showOfflineToast() {
+    const toast = await (new ToastController).create({ //TODO better with Constructor?
+      message: 'Sorry, you\'re offline',
+      duration: 2500,
+      color: "danger"
+    });
+    toast.present();
   }
 
   private round(value: number): number {
@@ -138,5 +157,15 @@ export class HomePage implements OnInit {
 
     // After complete is called the items will be in the new order
     console.log('After complete', this.weatherData);
+  }
+
+  public removeWeatherItem(weatherItem) {
+
+    for (let i = 0; i < this.weatherData.length; i++) {
+
+      if (this.weatherData[i] == weatherItem) {
+        this.weatherData.splice(i, 1);
+      }
+    }
   }
 }

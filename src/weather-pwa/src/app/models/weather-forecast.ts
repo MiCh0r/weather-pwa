@@ -109,6 +109,7 @@ export interface WeatherForecast {
     minutely: Minutely[];
     hourly: Hourly[];
     daily: Daily[];
+    isFromCache: boolean;
 }
 
 
